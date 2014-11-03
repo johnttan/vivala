@@ -119,16 +119,16 @@ Resistance.prototype.current = function(){
   return this.state;
 }
 
-var test = new Resistance(1, ['John', 'A', 'B', 'C', 'D', 'Yolo', 'Swag', 'Lol', 'Hella', 'GG'])
-
-console.log(test, test.current(), test.start(), test.current());
 
 var Mission = function(num, reqs, playersArray, nominator){
   this.num = num;
   this.required = reqs;
   this.players = playersArray;
-  this.voting = false;
+
   this.nominating = true;
+  this.voting = false;
+  this.onMission = false;
+
   this.nominator = nominator;
   this.team = [];
   this.votes = {};
@@ -136,18 +136,45 @@ var Mission = function(num, reqs, playersArray, nominator){
   this.result = undefined;
 }
 
-Mission.prototype.vote = function(voter, target){
-  if(this.voting && (this.players.indexOf(target) > -1)){
-    this.votes[voter] = target;
-    return true;
-  }else{
-    return false;
+Mission.prototype.vote = function(voter, vote){
+  if(this.voting && this.players.indexOf(voter) >= 0 && typeof this.votes[voter] === 'undefined'){
+    this.votes[voter] = vote;
+    if(Object.keys(this.votes).length === this.players.length){
+      var passes = 0;
+      var rejects = 0;
+      _.each(this.votes, function(el){
+        if(el === 'pass'){
+          passes += 1;
+        }else if(el === 'reject'){
+          rejects += 1;
+        }
+      })
+
+      if(passes >= rejects){
+        this.voting = false;
+        this.onMission = true;
+        return true;
+      }else{
+        this.nominator += 1;
+        this.nominating = true;
+        this.voting = false;
+        this.votes = {};
+        this.team = {};
+        return false;
+      }
+    }
   }
+  return true;
+
 }
 
 Mission.prototype.nominate = function(nominator, teamArray){
-  if(this.nominating && this.players[this.nominator] === nominator){
+  console.log(this.required, teamArray, nominator)
+  if(this.nominating && teamArray.length === this.required && nominator === this.players[this.nominator]){
     this.team = teamArray;
+    this.nominating = false;
+    this.voting = true;
+    console.log()
     return true;
   }else{
     return false;
@@ -157,17 +184,39 @@ Mission.prototype.nominate = function(nominator, teamArray){
 Mission.prototype.doMission = function(agent, action){
   if(this.team.indexOf(agent) >= 0){
     if(action === 'success' || action === 'fail'){
-      this.missionActions[action] = this.missionActions ? 1 : this.missionActions + 1;
+      this.missionActions[agent] = action;
     }
+  }else{
+    return false;
   }
 
-  
+  if(Object.keys(this.missionActions).length === this.team.length){
+    this.onMission = false;
+    return this.resolve();
+  }
+  return true;
 }
 
 Mission.prototype.resolve = function(){
+  var successes = 0;
+  var failures = 0;
+  _.each(this.missionActions, function(el){
+    if(el === 'success'){
+      successes += 1;
+    }else if(el === 'fail'){
+      failures += 1;
+    }
+  })
+  if(this.num === 4 && failures >= 2){
+    this.result = 'fail';
+  }else if(this.num !== 4 && failures >= 1){
+    this.result = 'fail';
+  }else{
+    this.result = 'success';
+  }
 
+  return this.result;
 }
-
 
 
 // Resistance responsible for keeping track of which mission and players

@@ -1,0 +1,166 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'karma-mocha',
+1 verbose cli   '--save-dev' ]
+2 info using npm@2.1.6
+3 info using node@v0.10.31
+4 silly cache add args [ 'karma-mocha', null ]
+5 verbose cache add spec karma-mocha
+6 silly cache add parsed spec { raw: 'karma-mocha',
+6 silly cache add   scope: null,
+6 silly cache add   name: 'karma-mocha',
+6 silly cache add   rawSpec: '',
+6 silly cache add   spec: '*',
+6 silly cache add   type: 'range' }
+7 verbose addNamed karma-mocha@*
+8 silly addNamed semver.valid null
+9 silly addNamed semver.validRange *
+10 silly addNameRange { name: 'karma-mocha', range: '*', hasData: false }
+11 verbose mapToRegistry name karma-mocha
+12 verbose mapToRegistry uri https://registry.npmjs.org/karma-mocha
+13 verbose addNameRange registry:https://registry.npmjs.org/karma-mocha not in flight; fetching
+14 verbose request on initialization, where is /karma-mocha
+15 verbose request after pass 1, where is /karma-mocha
+16 verbose request url raw /karma-mocha
+17 verbose request resolving registry [ 'https://registry.npmjs.org/', './karma-mocha' ]
+18 verbose request after pass 2, where is https://registry.npmjs.org/karma-mocha
+19 verbose request no auth needed
+20 info attempt registry request try #1 at 15:26:10
+21 verbose request id 6e9ba9d5b3d7dc61
+22 http request GET https://registry.npmjs.org/karma-mocha
+23 http 200 https://registry.npmjs.org/karma-mocha
+24 silly registry.get cb [ 200,
+24 silly registry.get   { date: 'Sun, 02 Nov 2014 23:26:11 GMT',
+24 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+24 silly registry.get     etag: '"5LVVCXG266REU2J02S2VUFHZ5"',
+24 silly registry.get     'content-type': 'application/json',
+24 silly registry.get     'cache-control': 'max-age=60',
+24 silly registry.get     'content-length': '24039',
+24 silly registry.get     'accept-ranges': 'bytes',
+24 silly registry.get     via: '1.1 varnish',
+24 silly registry.get     age: '0',
+24 silly registry.get     'x-served-by': 'cache-sjc3129-SJC',
+24 silly registry.get     'x-cache': 'HIT',
+24 silly registry.get     'x-cache-hits': '1',
+24 silly registry.get     'x-timer': 'S1414970770.817450,VS0,VE354',
+24 silly registry.get     vary: 'Accept',
+24 silly registry.get     'keep-alive': 'timeout=10, max=50',
+24 silly registry.get     connection: 'Keep-Alive' } ]
+25 silly addNameRange number 2 { name: 'karma-mocha', range: '*', hasData: true }
+26 silly addNameRange versions [ 'karma-mocha',
+26 silly addNameRange   [ '0.0.1',
+26 silly addNameRange     '0.0.2',
+26 silly addNameRange     '0.0.3',
+26 silly addNameRange     '0.0.4',
+26 silly addNameRange     '0.1.0',
+26 silly addNameRange     '0.1.1',
+26 silly addNameRange     '0.1.3',
+26 silly addNameRange     '0.1.4',
+26 silly addNameRange     '0.1.6',
+26 silly addNameRange     '0.1.7',
+26 silly addNameRange     '0.1.8',
+26 silly addNameRange     '0.1.9' ] ]
+27 verbose addNamed karma-mocha@0.1.9
+28 silly addNamed semver.valid 0.1.9
+29 silly addNamed semver.validRange 0.1.9
+30 verbose addRemoteTarball https://registry.npmjs.org/karma-mocha/-/karma-mocha-0.1.9.tgz not in flight; adding
+31 verbose addRemoteTarball [ 'https://registry.npmjs.org/karma-mocha/-/karma-mocha-0.1.9.tgz',
+31 verbose addRemoteTarball   'd777a98d655e08330f7893e833c369f82bd10191' ]
+32 info retry fetch attempt 1 at 15:26:11
+33 info attempt registry request try #1 at 15:26:11
+34 http fetch GET https://registry.npmjs.org/karma-mocha/-/karma-mocha-0.1.9.tgz
+35 http fetch 200 https://registry.npmjs.org/karma-mocha/-/karma-mocha-0.1.9.tgz
+36 silly fetchAndShaCheck shasum d777a98d655e08330f7893e833c369f82bd10191
+37 verbose addTmpTarball /tmp/npm-11417-0ae69d0e/registry.npmjs.org/karma-mocha/-/karma-mocha-0.1.9.tgz not in flight; adding
+38 verbose addTmpTarball already have metadata; skipping unpack for karma-mocha@0.1.9
+39 silly cache afterAdd karma-mocha@0.1.9
+40 verbose afterAdd /home/johntan/.npm/karma-mocha/0.1.9/package/package.json not in flight; writing
+41 verbose afterAdd /home/johntan/.npm/karma-mocha/0.1.9/package/package.json written
+42 silly install resolved [ { name: 'karma-mocha',
+42 silly install resolved     version: '0.1.9',
+42 silly install resolved     description: 'A Karma plugin. Adapter for Mocha testing framework.',
+42 silly install resolved     main: 'lib/index.js',
+42 silly install resolved     sharedKarmaFiles:
+42 silly install resolved      { editorconfig: '.editorconfig',
+42 silly install resolved        gitattributes: '.gitattributes',
+42 silly install resolved        'jshint.json': '.jshintrc',
+42 silly install resolved        'jscs.json': '.jscs.json' },
+42 silly install resolved     scripts: { test: 'grunt test' },
+42 silly install resolved     repository:
+42 silly install resolved      { type: 'git',
+42 silly install resolved        url: 'git://github.com/karma-runner/karma-mocha.git' },
+42 silly install resolved     keywords: [ 'karma-plugin', 'karma-adapter', 'mocha' ],
+42 silly install resolved     author: { name: 'Vojta Jina', email: 'vojta.jina@gmail.com' },
+42 silly install resolved     dependencies: {},
+42 silly install resolved     devDependencies:
+42 silly install resolved      { grunt: '~0.4',
+42 silly install resolved        'grunt-auto-release': '~0.0.2',
+42 silly install resolved        'grunt-bump': '~0.0.7',
+42 silly install resolved        'grunt-contrib-jshint': '~0.10',
+42 silly install resolved        'grunt-jscs-checker': '~0.4.4',
+42 silly install resolved        'grunt-karma': '~0.8.0',
+42 silly install resolved        'grunt-npm': '~0.0.2',
+42 silly install resolved        karma: '~0.12.0',
+42 silly install resolved        'karma-chai': '~0.1.0',
+42 silly install resolved        'karma-chrome-launcher': '~0.1.0',
+42 silly install resolved        'karma-firefox-launcher': '~0.1.0',
+42 silly install resolved        'karma-mocha': '~0.1.3',
+42 silly install resolved        'karma-sinon': '~1.0.3',
+42 silly install resolved        'shared-karma-files': 'git://github.com/karma-runner/shared-karma-files.git#82ae8d02' },
+42 silly install resolved     peerDependencies: { karma: '>=0.12.8', mocha: '*' },
+42 silly install resolved     license: 'MIT',
+42 silly install resolved     contributors:
+42 silly install resolved      [ [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object],
+42 silly install resolved        [Object] ],
+42 silly install resolved     bugs: { url: 'https://github.com/karma-runner/karma-mocha/issues' },
+42 silly install resolved     homepage: 'https://github.com/karma-runner/karma-mocha',
+42 silly install resolved     _id: 'karma-mocha@0.1.9',
+42 silly install resolved     dist:
+42 silly install resolved      { shasum: 'd777a98d655e08330f7893e833c369f82bd10191',
+42 silly install resolved        tarball: 'http://registry.npmjs.org/karma-mocha/-/karma-mocha-0.1.9.tgz' },
+42 silly install resolved     _from: 'karma-mocha@*',
+42 silly install resolved     _npmVersion: '1.4.4',
+42 silly install resolved     _npmUser: { name: 'vojtajina', email: 'vojta.jina@gmail.com' },
+42 silly install resolved     maintainers: [ [Object], [Object] ],
+42 silly install resolved     directories: {},
+42 silly install resolved     _shasum: 'd777a98d655e08330f7893e833c369f82bd10191',
+42 silly install resolved     _resolved: 'https://registry.npmjs.org/karma-mocha/-/karma-mocha-0.1.9.tgz' } ]
+43 info install karma-mocha@0.1.9 into /home/johntan/code/Viva
+44 info installOne karma-mocha@0.1.9
+45 verbose installOne of karma-mocha to /home/johntan/code/Viva not in flight; installing
+46 warn locking Error: EACCES, open '/home/johntan/.npm/_locks/karma-mocha-d2698569086f795f.lock'
+46 warn locking  /home/johntan/.npm/_locks/karma-mocha-d2698569086f795f.lock failed { [Error: EACCES, open '/home/johntan/.npm/_locks/karma-mocha-d2698569086f795f.lock']
+46 warn locking   errno: 3,
+46 warn locking   code: 'EACCES',
+46 warn locking   path: '/home/johntan/.npm/_locks/karma-mocha-d2698569086f795f.lock' }
+47 verbose stack Error: Attempt to unlock /home/johntan/code/Viva/node_modules/karma-mocha, which hasn't been locked
+47 verbose stack     at unlock (/usr/local/lib/node_modules/npm/lib/utils/locker.js:66:11)
+47 verbose stack     at cb (/usr/local/lib/node_modules/npm/lib/install.js:929:5)
+47 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:933:20
+47 verbose stack     at /usr/local/lib/node_modules/npm/lib/utils/locker.js:40:9
+47 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:149:38)
+47 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:177:38
+47 verbose stack     at Object.oncomplete (fs.js:107:15)
+48 verbose cwd /home/johntan/code/Viva
+49 error Linux 3.13.0-35-generic
+50 error argv "node" "/usr/local/bin/npm" "install" "karma-mocha" "--save-dev"
+51 error node v0.10.31
+52 error npm  v2.1.6
+53 error Attempt to unlock /home/johntan/code/Viva/node_modules/karma-mocha, which hasn't been locked
+54 error If you need help, you may report this error at:
+54 error     <http://github.com/npm/npm/issues>
+55 verbose exit [ 1, true ]

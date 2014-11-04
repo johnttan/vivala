@@ -7,21 +7,14 @@ var Resistance = function(gameId, playersArray){
   this.players = playersObj;
   _initPlayers.call(this, playersArray);
 
+  this.started = false;
   this.mission = 1;
   this.nomIndex = 0;
 
   this.missionHistory = [];
-  this.currentMission = {};
+  this.currentMission = new Mission(this.mission, this.missionGuide[this.mission][this.playersArray.length], this.nomIndex);
   this.currentTeam = {};
   this.currentVotes = {};
-
-  this.state = {
-    mission: 1,
-    stage: 'nominating',
-    currentNom: this.playersArray[this.nomIndex],
-    started: false,
-    missionHistory: this.missionHistory,
-  };
 
   this.missionGuide = {
     1:{
@@ -86,37 +79,29 @@ _initPlayers = function(playersArray){
     var role = availableRoles.pop();
     that.players[el] = {
       name: el,
-      nominating: false,
-      onTeam: false,
       role: role
     }
   })
 }
 
 Resistance.prototype.start = function(){
-  this.state.started = true;
+  this.started = true;
 }
 
-// action = {
-//   verb: 'vote',
-//   target: 'no'
-// }
-
-Resistance.prototype.doThis = function(playerName, action){
-  if(action === 'vote' && this.state.stage === 'voting'){
-
-  }else if(action === 'doMission' && this.state.stage === 'mission'){
-
-  }else if(action === 'nominate' && this.state.stage === 'mission'){
-
+Resistance.prototype.doThis = function(action, playerName, target){
+  if(this.started){
+    if(action === 'vote' && this.state.stage === 'voting'){
+      this.currentMission.vote(playerName, target);
+    }else if(action === 'doMission' && this.state.stage === 'mission'){
+      this.currentMission.doMission(playerName, target);
+    }else if(action === 'nominate' && this.state.stage === 'mission'){
+      this.currentMission.nominate(playerName, target);
+    }
   }
 }
 
-Resistance.prototype.next = function(){
-}
-
 Resistance.prototype.current = function(){
-  return this.state;
+  return this.currentMission;
 }
 
 
@@ -218,6 +203,7 @@ Mission.prototype.resolve = function(){
   return this.result;
 }
 
+exports.resistance = Resistance;
 
 // Resistance responsible for keeping track of which mission and players
 // Mission responsible for mission state and actions.

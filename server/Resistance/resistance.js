@@ -1,21 +1,7 @@
 _ = require('lodash');
 
-var Resistance = function(gameId, playersArray){
-  this.gameId = gameId;
-  var playersObj = {};
-  this.playersArray = playersArray;
-  this.players = playersObj;
-  _initPlayers.call(this, playersArray);
-
-  this.started = false;
-  this.mission = 1;
-  this.nomIndex = 0;
-
-  this.missionHistory = [];
-  this.currentMission = new Mission(this.mission, this.missionGuide[this.mission][this.playersArray.length], this.nomIndex);
-  this.currentTeam = {};
-  this.currentVotes = {};
-
+var Resistance = function(gameId, playersArray, socketRoom){
+  this.socketRoom = socketRoom;
   this.missionGuide = {
     1:{
       5: 2,
@@ -58,6 +44,21 @@ var Resistance = function(gameId, playersArray){
       10: 5
     }
   };
+  this.gameId = gameId;
+  var playersObj = {};
+  this.playersArray = playersArray;
+  this.players = playersObj;
+  _initPlayers.call(this, playersArray);
+
+  this.started = false;
+  this.mission = 1;
+  this.nomIndex = 0;
+  this.finished = function(nominator){
+    this.next(nominator);
+  }
+
+  this.missionHistory = [];
+  this.currentMission = new Mission(this.mission, this.missionGuide[this.mission][this.playersArray.length], this.playersArray, this.nomIndex, this.finished.bind(this));
 
 }
 
@@ -72,7 +73,6 @@ _initPlayers = function(playersArray){
   while(availableRoles.length < playersArray.length){
     availableRoles.push('resistance');
   }
-  console.log(availableRoles)
   availableRoles = _.shuffle(availableRoles);
 
   _.each(playersArray, function(el){
@@ -88,13 +88,24 @@ Resistance.prototype.start = function(){
   this.started = true;
 }
 
+Resistance.prototype.broadcastMessage = function(message){
+  // this.socketBroadcas
+}
+
+Resistance.prototype.next = function(nominator){
+  this.missionHistory.push(JSON.parse(JSON.stringify(this.currentMission)));
+  this.mission += 1;
+  this.nomIndex = nominator + 1;
+  this.currentMission = new Mission(this.mission, this.missionGuide[this.mission][this.playersArray.length], this.playersArray, this.nomIndex, this.finished.bind(this));
+}
+
 Resistance.prototype.doThis = function(action, playerName, target){
   if(this.started){
-    if(action === 'vote' && this.state.stage === 'voting'){
+    if(action === 'vote'){
       this.currentMission.vote(playerName, target);
-    }else if(action === 'doMission' && this.state.stage === 'mission'){
+    }else if(action === 'doMission'){
       this.currentMission.doMission(playerName, target);
-    }else if(action === 'nominate' && this.state.stage === 'mission'){
+    }else if(action === 'nominate'){
       this.currentMission.nominate(playerName, target);
     }
   }
@@ -105,7 +116,8 @@ Resistance.prototype.current = function(){
 }
 
 
-var Mission = function(num, reqs, playersArray, nominator){
+var Mission = function(num, reqs, playersArray, nominator, finished){
+  this.finished = finished;
   this.num = num;
   this.required = reqs;
   this.players = playersArray;
@@ -154,7 +166,7 @@ Mission.prototype.vote = function(voter, vote){
 }
 
 Mission.prototype.nominate = function(nominator, teamArray){
-  console.log(this.required, teamArray, nominator)
+  console.log(arguments)
   if(this.nominating && teamArray.length === this.required && nominator === this.players[this.nominator]){
     this.team = teamArray;
     this.nominating = false;
@@ -180,7 +192,7 @@ Mission.prototype.doMission = function(agent, action){
     return this.resolve();
   }
   return true;
-}
+};
 
 Mission.prototype.resolve = function(){
   var successes = 0;
@@ -199,7 +211,7 @@ Mission.prototype.resolve = function(){
   }else{
     this.result = 'success';
   }
-
+  this.finished(this.nominator);
   return this.result;
 }
 

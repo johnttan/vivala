@@ -1,6 +1,6 @@
 _ = require('lodash');
 
-var Resistance = function(gameId, playersArray, socketRoom){
+var Resistance = function(gameId, socketRoom, maxPlayers){
   this.socketRoom = socketRoom;
   this.missionGuide = {
     1:{
@@ -48,8 +48,7 @@ var Resistance = function(gameId, playersArray, socketRoom){
   var playersObj = {};
   this.playersArray = playersArray;
   this.players = playersObj;
-  _initPlayers.call(this, playersArray);
-
+  this.maxPlayers = maxPlayers;
   this.started = false;
   this.mission = 1;
   this.nomIndex = 0;
@@ -85,7 +84,17 @@ _initPlayers = function(playersArray){
 }
 
 Resistance.prototype.start = function(){
+  _initPlayers.call(this, this.playersArray);
   this.started = true;
+}
+
+Resistance.prototype.addPlayer = function(player){
+  if(!this.started){
+    this.playersArray.push(player);
+  }
+  if(this.maxPlayers === this.playersArray.length){
+    this.start();
+  }
 }
 
 Resistance.prototype.broadcastMessage = function(message){
@@ -166,12 +175,10 @@ Mission.prototype.vote = function(voter, vote){
 }
 
 Mission.prototype.nominate = function(nominator, teamArray){
-  console.log(arguments)
   if(this.nominating && teamArray.length === this.required && nominator === this.players[this.nominator]){
     this.team = teamArray;
     this.nominating = false;
     this.voting = true;
-    console.log()
     return true;
   }else{
     return false;
